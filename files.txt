@@ -1,0 +1,25 @@
+{
+  "C:\\": {
+    "AUTOEXEC.BAT": "欢迎使用PyDOS",
+    "CONFIG.SYS": "DEVICE=C:\\DOS\\HIMEM.SYS",
+    "DOS": {
+      "COMMAND.COM": "PyDOS 模块",
+      "README.TXT": "这是一个基于Python的DOS模拟器"
+    },
+    "USERS": {
+      "Desktop": {
+        "readme.txt": "You know what?\nThis version is built by a 14-year-old boy\nand it's my big dream to make it forever!\nIf you want to know more,please input 'CLS' and open 'C:/readme2.txt'! :)",
+        "readme2.txt": "这是承载着梦想的程序\n一名初中生渺小的梦想\nI'm going to keep on developing it!\n(2025-03-21)\n谢谢观看！",
+        "路姐.docx": "Do you think she is a person?",
+        "路姐的私密文件": {
+          "simi.txt": "Wang Shuokun is my brother!"
+        },
+        "test2": {}
+      },
+      "Documents": {},
+      "D:\\": {},
+      "tst2": {}
+    },
+    "use": {}
+  }
+}
