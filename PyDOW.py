@@ -4,7 +4,6 @@ PyDOW Preview 0.01 - 20250501
 from tkinter import *
 import json
 import os
-
 class PyDOW_Use:
     def __init__(self, root):
         #root:主窗口
@@ -16,7 +15,51 @@ class PyDOW_Use:
         self.auto_setup_default_icons()
         self.load_desktop_apps()
 
-    # 名字由来：file_load and save :)
+        from tkinter import Label
+        import time as t
+
+        self.time_label = Label(root, text=self.time_geshi(), bg="lightblue", font=('Courier New', 12))
+        self.time_label.grid(row=0, column=0, columnspan=4, sticky='ew', padx=10, pady=5)
+
+        self.root.after(0, self.update_time)
+
+    def time_geshi(self):
+        import time as t
+        a = t.ctime()
+        words = a.split()
+        def month(en):
+            if en == "Jan":
+                return "1月"
+            elif en == "Feb":
+                return "2月"
+            elif en == "Mar":
+                return "3月"
+            elif en == "Apr":
+                return "4月"
+            elif en == "May":
+                return "5月"
+            elif en == "Jun":
+                return "6月"
+            elif en == "Jul":
+                return "7月"
+            elif en =="Aug":
+                return "8月"
+            elif en == "Sep":
+                return "9月"
+            elif en == "Oct":
+                return "10月"
+            elif en == "Nov":
+                return "11月"
+            else:
+                return "12月"
+        b = month(words[1])+words[2]+"日"+' '+words[3]
+        return b
+    def update_time(self):
+        import time as t
+        self.time_label.config(text=self.time_geshi())
+        self.root.after(1000, self.update_time)
+
+    # 名字由来：file_[load and save] :)
     def file_las(self, file, mode, data=None):
         filename = file + ".txt"
         from tkinter import messagebox
@@ -93,15 +136,15 @@ class PyDOW_Use:
         icon.grid(row=row, column=col, padx=10, pady=10)
 
     def open_app_test(self, app_name):
-        print(f"打开应用: {app_name}")
-        if app_name == "此电脑":
-            self.open_this_pc_window()
-        elif app_name == "回收站":
-            print("打开回收站")
-        elif app_name == "文档":
-            print("打开文档")
-        else:
-            print(f"打开应用: {app_name}")
+        match app_name:
+            case "此电脑":
+                self.open_this_pc_window()
+            case "DOS":
+                self.open_DOS()
+            case '退出':
+                self.open_exit()
+            case _:
+                print(f"打开{app_name}")
 
     def load_desktop_apps(self):
         desktop_config = self.file_las("desktop_apps_sign_place", "load")
@@ -123,11 +166,25 @@ class PyDOW_Use:
     #如何使用：
     '''
     添加应用：
-        app.add_desktop_app("游戏", row=2,
+        app.add_desktop_app("游戏", row=2)
     
     '''
 
     #此电脑
+
+    def open_DOS(self):
+        from PyDOS2 import PyDOS_Use
+        import tkinter as tk
+        root = tk.Tk()
+        preparation = "PyDOS 操作系统\n作者: 白僵菌\n版本: PyDOS Develop Interview 0.1\n欢迎使用！"
+        app = PyDOS_Use(root)
+        file_size = os.path.getsize("files.txt")
+        app.display_output(preparation)
+        app.display_output(f'\n\n文件大小:{file_size / 1000}KB\n')
+        root.mainloop()
+
+    def open_exit(self):
+        self.root.destroy()
     def open_this_pc_window(self):
         fs = self.file_las("files", "load")
         if not fs or "C:\\" not in fs:
