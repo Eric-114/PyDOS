@@ -10,7 +10,7 @@ padx=5 & pady=5   --> 内边距
 args              --> 剩余部分内容，如Users\路姐.docx
 '''
 
-preparation=("PyDOS 操作系统\n作者: 白僵菌\n版本: PyDOS Develop Interview 0.1\n欢迎使用！\n输入【GUI】以启动PYODW!")
+preparation=("PyDOS 操作系统\n作者: 白僵菌\n版本: PyDOS Develop Interview 0.1\n欢迎使用！\n输入【GUI】以启动PyDOW!")
 
 import tkinter as tk
 import json
