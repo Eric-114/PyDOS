@@ -7,10 +7,10 @@ SAVE_FILE   - 文件系统存储文件名
 create_default_fs --> 备用，防止没有 files.txt
 state='disabled'  --> 禁止编辑
 padx=5 & pady=5   --> 内边距
-args              --> 剩余部分内容，如Users\路姐.docx 
+args              --> 剩余部分内容，如Users\路姐.docx
 '''
 
-preparation="PyDOS 操作系统\n作者: 白僵菌\n版本: PyDOS Develop Interview 0.1\n欢迎使用！\n欢迎在B站关注【白大僵菌】！"
+preparation=("PyDOS 操作系统\n作者: 白僵菌\n版本: PyDOS Develop Interview 0.1\n欢迎使用！\n输入【GUI】以启动PYODW!")
 
 import tkinter as tk
 import json
@@ -118,7 +118,8 @@ class PyDOS_Use:
             'mkdir': self.cmd_mkdir,
             'del': self.cmd_del,
             'copy': self.cmd_copy,
-            'game' : self.cmd_game
+            'game' : self.cmd_game,
+            'gui': self.cmd_gui,
         }
         parts = command.split()
         if not parts:
@@ -137,6 +138,7 @@ class PyDOS_Use:
     def cmd_help(self, args):
         help_text = """
         支持命令:
+        GUI     启动PyDOW
         HELP    显示帮助信息
         CLS     清屏
         DIR     列出目录内容
@@ -175,7 +177,7 @@ class PyDOS_Use:
         for name, content in current_dir.items():
             output += f"{'<DIR>' if isinstance(content, dict) else 'FILE':12} {name}\n"
         self.display_output(output)
-    
+
     def cmd_game(self,args):
         from test import Use
         a=Use()
@@ -277,6 +279,15 @@ class PyDOS_Use:
         self.save_filesystem()
         self.display_output(f"\n已复制 {src} 到 {dest}")
 
+    def cmd_gui(self,args):
+        from PyDOW import PyDOW_Use
+        import tkinter as tk
+        import json
+        import os
+        root = tk.Tk()
+
+        app = PyDOW_Use(root)
+        root.mainloop()
     def navigate_to_path(self, path):
         try:
             if path.startswith("C:\\"):
