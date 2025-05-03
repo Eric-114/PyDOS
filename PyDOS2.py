@@ -10,15 +10,13 @@ padx=5 & pady=5   --> 内边距
 args              --> 剩余部分内容，如Users\路姐.docx
 '''
 
-preparation=("PyDOS 操作系统\n作者: 白僵菌\n版本: PyDOS Develop Interview 0.1\n欢迎使用！\n输入【GUI】以启动PyDOW!")
+preparation=("PyDOS 操作系统\n作者: 白僵菌\n版本: PyDOS Develop Interview 0.1\n欢迎使用！\n输入【GUI】以启动PYODW!")
 
 import tkinter as tk
 import json
 import os
 from tkinter import messagebox
-import pygame,sys
 import random
-from pygame.locals import *
 
 
 class PyDOS_Use:
@@ -118,7 +116,6 @@ class PyDOS_Use:
             'mkdir': self.cmd_mkdir,
             'del': self.cmd_del,
             'copy': self.cmd_copy,
-            'game' : self.cmd_game,
             'gui': self.cmd_gui,
         }
         parts = command.split()
@@ -150,7 +147,6 @@ class PyDOS_Use:
         MKDIR   创建目录
         EXIT    退出系统
         ???     隐藏彩蛋 :)
-        GAME    游戏 （开发中）
         """
         self.display_output(help_text)
 
@@ -177,11 +173,6 @@ class PyDOS_Use:
         for name, content in current_dir.items():
             output += f"{'<DIR>' if isinstance(content, dict) else 'FILE':12} {name}\n"
         self.display_output(output)
-
-    def cmd_game(self,args):
-        from test import Use
-        a=Use()
-        a.Use2()
 
     def cmd_type(self, args):
         if not args:

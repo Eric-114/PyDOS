@@ -102,8 +102,8 @@ class PyDOW_Use:
             messagebox.showerror("错误", f"文件操作失败: {str(e)}")
             return None
 
-    def add_desktop_app(self, app_name, row=None, col=None):
-        desktop_config = self.file_las("desktop_apps_sign_place", "load")
+    def add_desktop_app(self, app_name, where,row=None, col=None):
+        desktop_config = self.file_las(where, "load")
         if desktop_config is None:
             desktop_config = {}
         if row is None or col is None:
@@ -120,7 +120,7 @@ class PyDOW_Use:
         else:
             row, col = int(row), int(col)
         desktop_config[app_name] = [row, col]
-        self.file_las("desktop_apps_sign_place", "save", desktop_config)
+        self.file_las(where, "save", desktop_config)
         self.create_app_icon(app_name, row, col)
 
     def create_app_icon(self, app_name, row, col):
@@ -143,6 +143,8 @@ class PyDOW_Use:
                 self.open_DOS()
             case '退出':
                 self.open_exit()
+            case '设置':
+                self.open_settings_window()
             case _:
                 print(f"打开{app_name}")
 
@@ -157,10 +159,10 @@ class PyDOW_Use:
         """
         desktop_config = self.file_las("desktop_apps_sign_place", "load")
         if not desktop_config:
-            self.add_desktop_app("此电脑")
-            self.add_desktop_app("回收站")
-            self.add_desktop_app("文档")
-            self.add_desktop_app("设置")
+            self.add_desktop_app("此电脑",'desktop_apps_sign_place')
+            self.add_desktop_app("回收站", 'desktop_apps_sign_place')
+            self.add_desktop_app("文档",'desktop_apps_sign_place')
+            self.add_desktop_app("设置",'desktop_apps_sign_place')
 
 
     #如何使用：
@@ -185,6 +187,80 @@ class PyDOW_Use:
 
     def open_exit(self):
         self.root.destroy()
+
+    def open_settings_window(self):
+        settings_window = Toplevel(self.root)
+        settings_window.title("设置")
+        settings_window.geometry("500x400")
+        settings_window.configure(bg='black')
+
+        Label(
+            settings_window,
+            text="系统设置",
+            bg='black',
+            fg='#00FF00',
+            font=('Courier New', 16, 'bold'),
+            anchor='w'
+        ).pack(pady=10)
+
+        frame = Frame(settings_window, bg='black')
+        frame.pack(fill='both', expand=True, padx=20)
+
+        # 添加“关于”按钮
+        about_btn = Button(
+            frame,
+            text="关于",
+            width=20,
+            height=2,
+            bg='gray',
+            fg='white',
+            command=self.open_about_window
+        )
+        about_btn.pack(pady=10)
+
+    def open_about_window(self):
+        about_window = Toplevel(self.root)
+        about_window.title("关于")
+        about_window.geometry("400x300")
+        about_window.configure(bg='black')
+
+        Label(
+            about_window,
+            text="PyDOW 操作系统",
+            bg='black',
+            fg='#00FF00',
+            font=('Courier New', 16, 'bold')
+        ).pack(pady=20)
+
+        a = self.word_las('preparation1')
+
+        info = (
+            "版本: PyDOW"+a+"\n"
+            "发布日期: 2025-05-01\n"
+            "开发者: 白僵菌\n"
+        )
+
+        Label(
+            about_window,
+            text=info,
+            bg='black',
+            fg='#00FF00',
+            font=('Courier New', 12),
+            justify=LEFT,
+            anchor='w'
+        ).pack(padx=20, pady=10)
+
+        close_btn = Button(
+            about_window,
+            text="关闭",
+            width=10,
+            height=1,
+            bg='gray',
+            fg='white',
+            command=about_window.destroy
+        )
+        close_btn.pack(pady=10)
+
     def open_this_pc_window(self):
         fs = self.file_las("files", "load")
         if not fs or "C:\\" not in fs:
